@@ -4,14 +4,15 @@
  */
 
 #include <Arduino.h>
-#include <avr/io.h>
-#include <avr/interrupt.h>
-#include <avr/sfr_defs.h>
 #include "log.h"
 #include "ps2keyboard.h"
 
-#define PS2_CLOCK 3
-#define PS2_DATA  4
+#ifndef PS2_CLOCK
+    #define PS2_CLOCK 3
+#endif
+#ifndef PS2_DATA
+    #define PS2_DATA  4
+#endif
 
 #define BUFFER_SIZE 50
 static volatile uint8_t buffer[BUFFER_SIZE];
