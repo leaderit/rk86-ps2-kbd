@@ -3,9 +3,6 @@
   https://www.youtube.com/watch?v=7C4zeHbLxNg
  */
 #include <Arduino.h>
-#include <avr/io.h>
-#include <avr/interrupt.h>
-#include <avr/sfr_defs.h>
 #include "log.h"
 #include "ps2keyboard.h"
 #include "keycodes.h"
