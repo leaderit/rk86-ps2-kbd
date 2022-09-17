@@ -108,14 +108,14 @@ void Matrix_MT8816::set(  uint8_t x, uint8_t y, bool press )
     // ON/OFF
     digitalWrite(MT8816_DATA, press? HIGH:LOW );
     // X
-    digitalWrite(MT8816_AX0, (x & 0b0001)? HIGH:LOW );
-    digitalWrite(MT8816_AX1, (x & 0b0010)? HIGH:LOW );
-    digitalWrite(MT8816_AX2, (x & 0b0100)? HIGH:LOW );
-    digitalWrite(MT8816_AX3, (x & 0b1000)? HIGH:LOW );
+    digitalWrite(MT8816_AX0, (y & 0b0001)? HIGH:LOW );
+    digitalWrite(MT8816_AX1, (y & 0b0010)? HIGH:LOW );
+    digitalWrite(MT8816_AX2, (y & 0b0100)? HIGH:LOW );
+    digitalWrite(MT8816_AX3, (y & 0b1000)? HIGH:LOW );
     // Y
-    digitalWrite(MT8816_AY0, (y & 0b001)? HIGH:LOW );
-    digitalWrite(MT8816_AY1, (y & 0b010)? HIGH:LOW );
-    digitalWrite(MT8816_AY2, (y & 0b100)? HIGH:LOW );
+    digitalWrite(MT8816_AY0, (x & 0b001)? HIGH:LOW );
+    digitalWrite(MT8816_AY1, (x & 0b010)? HIGH:LOW );
+    digitalWrite(MT8816_AY2, (x & 0b100)? HIGH:LOW );
     // STROB
     digitalWrite(MT8816_STB, HIGH);
     delay(1);

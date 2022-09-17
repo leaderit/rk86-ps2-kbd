@@ -26,6 +26,14 @@ void setup() {
   leds.start();
   // Start PS/2 keyboard
   keyboard.start();
+
+  digitalWrite(RADIO_86KR_RL_KEY, HIGH);
+  digitalWrite(RADIO_86KR_UC_KEY, HIGH);
+  digitalWrite(RADIO_86KR_CC_KEY, HIGH);
+  pinMode( RADIO_86KR_RL_KEY, OUTPUT);
+  pinMode( RADIO_86KR_UC_KEY, OUTPUT);
+  pinMode( RADIO_86KR_CC_KEY, OUTPUT);
+    
   // Reset keyboard on reboot
   keyboard.reset(); 
   keyboard.setCodeTable( 2 ); 
@@ -60,9 +68,8 @@ void loop() {
 
       key = stateKey( scan );
       if ( key != 0xFF ) {
-        LOG_HEX_BIN("State key: ", key);
-        if ( keyUp ) bitSet( RADIO_86KR_CTRL_PORT, key);
-        else bitClear( RADIO_86KR_CTRL_PORT, key );
+        LOG_TIME(""); LOG_LN("State key: ", key, DEC);
+        digitalWrite( key, keyUp? HIGH:LOW);
         if ( key ==  RADIO_86KR_CC_KEY ) {
           radio86rk_shift = !keyUp;
           radio86rk_ru_mode = led_rus_lat ^ radio86rk_shift;
@@ -74,52 +81,10 @@ void loop() {
         y = key & 0xf;
         LOG(" Key:", key, HEX);
         LOG(" Key Press:", !keyUp, DEC);
-        LOG(" x=", x, DEC);
+        LOG(" Matrix x=", x, DEC);
         LOG_LN(" y=", y, DEC);
-        // if ( key != 0xFF ) setMatrix( key >> 4, key & 0xf, !keyUp );
-
         if ( key != 0xFF ) matrix.set( key >> 4, key & 0xf, !keyUp );        
       }
-
-// // #ifdef LOG_ON      
-//       if ( keyboard.isParityError() ) LOG_TEXT("? ");
-//       LOG_HEX_BIN("", scan );
-
-//       if ( scan == 0x0858 ) keyboard.setLeds( keyboard.leds() ^ PS2Keyboard::Leds::CapsLock ); 
-//       if ( scan == 0x0877 ) keyboard.setLeds( keyboard.leds() ^ PS2Keyboard::Leds::NumLock ); 
-//       if ( scan == 0x087E ) keyboard.setLeds( keyboard.leds() ^ PS2Keyboard::Leds::ScrollLock );
-
-      // if ( scan == 0x0876 ) keyboard.reset();
-      
-//       if ( scan == 0x080A ) {
-//         press = !press;
-//         setMatrix(x, y, press);
-//         if ( !press ) {
-//           y++;
-//           if (y>7) {
-//             y = 0; x++;
-//             if (x>7) x=0;
-//           }
-//         }
-//       }
-//       if ( scan == 0xF083 ) {
-//         setMatrix(0, 0, true);
-//         setMatrix(0, 4, true);
-//         setMatrix(1, 2, true);
-//         setMatrix(2, 3, true);        
-//         setPortFromMatrix( 0b01111111 );        
-//         setPortFromMatrix( 0b10111111 );        
-//         setPortFromMatrix( 0b00111111 );        
-//         setPortFromMatrix( 0b00000000 );        
-//       }
-
-//       if ( scan == 0x0801 ) keyboard.setTypematic( 3, 3, 7 ); 
-//       if ( scan == 0x0809 ) keyboard.setTypematic( 0, 0, 0 );
-
-//       if ( scan == 0x0805 ) keyboard.id();
-//       if ( scan == 0x0803 ) { delay(100); LOG("PORTB=", PINB, BIN);  LOG_LN(" PCINT0 Count=", pcint0_count, DEC); }
-// #endif
       if ( keyboard.isParityError() || keyboard.error() > 0 ) keyboard.reset();
     }
-    // delay(100);
 }

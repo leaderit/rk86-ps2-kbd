@@ -3,6 +3,7 @@
 #include <avr/io.h>
 #include "log.h"
 
+#ifdef PS2_ATMEGA
 // Defenitions for Radio 86RK retro PC state keys PORTD pins
 #define RADIO_86KR_CTRL_PORT PORTD
 // #define RADIO_86KR_CTRL_PORT DDRD
@@ -15,6 +16,14 @@
     #define RADIO_86KR_RL_KEY   5
     #define RADIO_86KR_UC_KEY   1
     #define RADIO_86KR_CC_KEY   0
+#endif
+#endif
+
+#ifdef PS2_ATMEGA_MT8816
+    #define RADIO_86KR_RL_KEY   18
+    #define RADIO_86KR_UC_KEY   19
+    #define RADIO_86KR_CC_KEY   5
+    #define CONTROL_KEY3        6
 #endif
 
 
